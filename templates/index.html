@@ -441,7 +441,8 @@
     hero.id = 'onboard-hero';
     hero.innerHTML = `
       <div class="onboard-title">dadOS</div>
-      <div class="onboard-greeting">Your personal AI assistant, built to learn and grow with you. Say "my name is ___" to get started.</div>`;
+      <div class="onboard-greeting">Hey <strong>${name}</strong> — your personal AI. Built by Tanay, owned by you.</div>
+    `;
 
     const roadmap = document.createElement('div');
     roadmap.className = 'roadmap-block';
