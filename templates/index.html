@@ -8,7 +8,6 @@
   <style>
     :root {
       --charcoal:    #242424;
-      --midnight:    #111111;
       --white:       #ffffff;
       --gray-mid:    #898989;
       --gray-light:  #f5f5f5;
@@ -48,8 +47,6 @@
       display: flex;
       flex-direction: column;
       height: 100vh;
-      max-width: 860px;
-      margin: 0 auto;
     }
 
     /* ── HEADER ── */
@@ -78,15 +75,12 @@
 
     .logo-name {
       font-family: var(--font-display);
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--charcoal);
-      line-height: 1.1;
+      font-size: 18px; font-weight: 600;
+      color: var(--charcoal); line-height: 1.1;
     }
 
     .version-pill {
-      font-size: 11px;
-      font-weight: 500;
+      font-size: 11px; font-weight: 500;
       color: var(--gray-mid);
       background: var(--gray-light);
       padding: 2px 8px;
@@ -95,20 +89,9 @@
 
     .header-right { display: flex; align-items: center; gap: 8px; }
 
-    .status-wrap {
-      display: flex; align-items: center; gap: 6px;
-      padding: 5px 10px;
-    }
-
-    .status-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: #22c55e;
-    }
-
-    .status-label {
-      font-size: 12px; font-weight: 500; color: var(--gray-mid);
-    }
+    .status-wrap { display: flex; align-items: center; gap: 6px; padding: 5px 10px; }
+    .status-dot { width: 6px; height: 6px; border-radius: 50%; background: #22c55e; }
+    .status-label { font-size: 12px; font-weight: 500; color: var(--gray-mid); }
 
     .btn {
       background: var(--white);
@@ -123,12 +106,7 @@
       white-space: nowrap;
     }
     .btn:hover { opacity: 0.7; }
-
-    .btn-dark {
-      background: var(--charcoal);
-      color: var(--white);
-      box-shadow: none;
-    }
+    .btn-dark { background: var(--charcoal); color: var(--white); box-shadow: none; }
 
     /* ── MEMORY BAR ── */
     .memory-bar {
@@ -158,68 +136,81 @@
     /* ── CHAT ── */
     #chat {
       flex: 1; overflow-y: auto;
-      padding: 28px;
-      display: flex; flex-direction: column; gap: 20px;
+      display: flex; flex-direction: column;
       scroll-behavior: smooth;
     }
     #chat::-webkit-scrollbar { width: 3px; }
     #chat::-webkit-scrollbar-thumb { background: var(--gray-border); border-radius: 2px; }
 
-    /* ── ONBOARDING ── */
-    .onboarding {
-      align-self: stretch;
-      display: flex; flex-direction: column; gap: 0;
-      animation: fade-up 0.35s ease-out;
-    }
-
+    /* ── ONBOARDING PIECES ── */
     @keyframes fade-up {
       from { opacity: 0; transform: translateY(10px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
     .onboard-hero {
-      padding: 36px 0 28px;
-      border-bottom: 1px solid var(--gray-border);
-      margin-bottom: 28px;
+      max-width: 860px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 48px 28px 32px;
+      animation: fade-up 0.3s ease-out;
     }
 
     .onboard-title {
       font-family: var(--font-display);
-      font-size: 52px; font-weight: 600;
+      font-size: 64px; font-weight: 600;
       color: var(--charcoal);
-      line-height: 1.1; letter-spacing: 0;
-      margin-bottom: 10px;
+      line-height: 1; letter-spacing: -1px;
+      margin-bottom: 12px;
     }
 
     .onboard-greeting {
-      font-size: 15px; font-weight: 300;
+      font-size: 16px; font-weight: 300;
       color: var(--gray-mid); line-height: 1.5;
-      letter-spacing: -0.2px;
     }
     .onboard-greeting strong { color: var(--charcoal); font-weight: 600; }
 
-    .onboard-section { margin-bottom: 24px; }
+    /* Roadmap — full width breakout */
+    .roadmap-block {
+      width: 100%;
+      border-top: 1px solid var(--gray-border);
+      border-bottom: 1px solid var(--gray-border);
+      animation: fade-up 0.35s ease-out;
+    }
+
+    .roadmap-label {
+      font-size: 11px; font-weight: 600;
+      color: var(--gray-mid);
+      text-transform: uppercase; letter-spacing: 0.08em;
+      padding: 14px 28px 10px;
+    }
+
+    .roadmap-block iframe {
+      display: block;
+      width: 100%;
+      height: 580px;
+      border: none;
+    }
+
+    /* Bottom: start here + cta */
+    .onboard-bottom {
+      max-width: 860px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 32px 28px 32px;
+      animation: fade-up 0.4s ease-out;
+    }
 
     .onboard-section-label {
       font-size: 11px; font-weight: 600;
       color: var(--gray-mid);
       text-transform: uppercase; letter-spacing: 0.08em;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
-
-    .onboard-what {
-      box-shadow: var(--shadow-card);
-      border-radius: var(--radius-lg);
-      padding: 18px 22px;
-      font-size: 14px; font-weight: 300;
-      color: var(--charcoal); line-height: 1.75;
-      letter-spacing: -0.2px;
-    }
-    .onboard-what p { margin-bottom: 10px; }
-    .onboard-what p:last-child { margin-bottom: 0; }
 
     .onboard-commands {
       display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+      margin-bottom: 24px;
     }
 
     .cmd-row {
@@ -239,37 +230,10 @@
     }
     .cmd-desc {
       font-size: 12px; font-weight: 300;
-      color: var(--gray-mid); line-height: 1.4; letter-spacing: -0.2px;
+      color: var(--gray-mid); line-height: 1.4;
     }
 
-    .onboard-paths {
-      display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;
-    }
-
-    .path-card {
-      box-shadow: var(--shadow-card);
-      border-radius: var(--radius-md);
-      padding: 14px 12px;
-      background: var(--white);
-      transition: opacity 0.15s;
-    }
-    .path-card:hover { opacity: 0.65; }
-
-    .path-icon { font-size: 18px; margin-bottom: 6px; }
-    .path-name {
-      font-family: var(--font-display);
-      font-size: 12px; font-weight: 600;
-      color: var(--charcoal); margin-bottom: 3px; line-height: 1.2;
-    }
-    .path-desc {
-      font-size: 11px; font-weight: 300;
-      color: var(--gray-mid); line-height: 1.4; letter-spacing: -0.2px;
-    }
-
-    .onboard-cta {
-      padding: 8px 0 4px;
-      display: flex; align-items: center; gap: 16px;
-    }
+    .onboard-cta { display: flex; align-items: center; gap: 16px; }
 
     .cta-main {
       background: var(--charcoal); color: var(--white);
@@ -282,12 +246,14 @@
     }
     .cta-main:hover { opacity: 0.7; }
 
-    .cta-hint {
-      font-size: 12px; font-weight: 300;
-      color: var(--gray-mid); letter-spacing: -0.2px;
-    }
+    .cta-hint { font-size: 12px; font-weight: 300; color: var(--gray-mid); }
 
     /* ── MESSAGES ── */
+    .msgs-wrap {
+      display: flex; flex-direction: column; gap: 20px;
+      padding: 28px;
+    }
+
     .msg {
       display: flex; flex-direction: column; gap: 5px;
       animation: fade-up 0.18s ease-out;
@@ -310,15 +276,13 @@
     }
 
     .msg.user .bubble {
-      background: var(--gray-light);
-      color: var(--charcoal);
+      background: var(--gray-light); color: var(--charcoal);
       border-bottom-right-radius: var(--radius-sm);
       box-shadow: var(--shadow-inset);
     }
 
     .msg.dad .bubble {
-      background: var(--charcoal);
-      color: var(--white);
+      background: var(--charcoal); color: var(--white);
       border-bottom-left-radius: var(--radius-sm);
       box-shadow: rgba(19,19,22,0.18) 0px 4px 16px -4px;
     }
@@ -388,8 +352,7 @@
       color: var(--white);
       font-family: var(--font-body);
       font-size: 12px; font-weight: 600;
-      cursor: pointer;
-      transition: opacity 0.15s;
+      cursor: pointer; transition: opacity 0.15s;
       white-space: nowrap; flex-shrink: 0;
     }
     #send-btn:hover    { opacity: 0.7; }
@@ -398,23 +361,24 @@
 
     .input-hint {
       font-size: 11px; font-weight: 300;
-      color: var(--gray-mid); margin-top: 8px; letter-spacing: -0.2px;
+      color: var(--gray-mid); margin-top: 8px;
     }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 640px) {
       .header { padding: 12px 16px; }
-      .onboard-title { font-size: 36px; }
-      #chat { padding: 16px; gap: 14px; }
+      .onboard-title { font-size: 40px; }
+      .onboard-hero { padding: 28px 16px 20px; }
+      .onboard-bottom { padding: 20px 16px; }
+      .msgs-wrap { padding: 16px; gap: 14px; }
       .footer { padding: 12px 16px 16px; }
       .memory-bar { padding: 6px 16px; }
       .msg.user { max-width: 88%; }
       .msg.dad  { max-width: 96%; }
       .bubble { font-size: 13px; }
       .onboard-commands { grid-template-columns: 1fr; }
-      .onboard-paths { grid-template-columns: repeat(2, 1fr); }
       .status-wrap { display: none; }
-      .onboard-hero { padding: 20px 0 16px; }
+      .roadmap-block iframe { height: 380px; }
     }
   </style>
 </head>
@@ -442,7 +406,9 @@
     <span id="mem-display">loading...</span>
   </div>
 
-  <div id="chat"></div>
+  <div id="chat">
+    <div class="msgs-wrap" id="msgs"></div>
+  </div>
 
   <div class="footer">
     <div class="input-row">
@@ -462,67 +428,72 @@
 
 <script>
   const chatEl  = document.getElementById('chat');
+  const msgsEl  = document.getElementById('msgs');
   const inputEl = document.getElementById('input');
   const sendBtn = document.getElementById('send-btn');
   const STORAGE_KEY = 'dadOS_onboarded';
 
   function buildOnboarding(userName) {
     const name = userName && userName !== 'unknown' ? userName : 'Manav';
-    const el = document.createElement('div');
-    el.className = 'onboarding';
-    el.id = 'onboarding';
-    el.innerHTML = `
-      <div class="onboard-hero">
-        <div class="onboard-title">dadOS</div>
-        <div class="onboard-greeting">Welcome, <strong>${name}</strong>. Your personal AI — built by Tanay, owned by you.</div>
-      </div>
 
-      <div class="onboard-section">
-        <div class="onboard-section-label">What is this?</div>
-        <div class="onboard-what">
-          <p>Right now it's basic — a working AI with memory and a few tricks. Every upgrade you make teaches you something real about how AI works. Not theory. Not exercises. You're building an actual thing.</p>
-          <p>The code is all yours. Change anything. Break things. That's the point.</p>
+    const hero = document.createElement('div');
+    hero.className = 'onboard-hero';
+    hero.id = 'onboard-hero';
+    hero.innerHTML = `
+      <div class="onboard-title">dadOS</div>
+      <div class="onboard-greeting">Your personal AI assistant, built to learn and grow with you. Say "my name is ___" to get started.</div>`;
+
+    const roadmap = document.createElement('div');
+    roadmap.className = 'roadmap-block';
+    roadmap.id = 'roadmap-block';
+    roadmap.innerHTML = `
+      <div class="roadmap-label">Your roadmap — 10 paths, from basic to intricate</div>
+      <iframe src="https://roadmap.sh/r/embed?id=69d8260135198b31d6e8cab0" frameBorder="0"></iframe>
+    `;
+
+    const bottom = document.createElement('div');
+    bottom.className = 'onboard-bottom';
+    bottom.id = 'onboard-bottom';
+    bottom.innerHTML = `
+      <div class="onboard-section-label">Start here</div>
+      <div class="onboard-commands">
+        <div class="cmd-row" onclick="prefill('my name is Manav')">
+          <div class="cmd-text">my name is Manav</div>
+          <div class="cmd-desc">dadOS remembers you across every conversation</div>
         </div>
-      </div>
-
-      <div class="onboard-section">
-        <div class="onboard-section-label">Start here</div>
-        <div class="onboard-commands">
-          <div class="cmd-row" onclick="prefill('my name is Manav')">
-            <div class="cmd-text">my name is Manav</div>
-            <div class="cmd-desc">dadOS remembers you across every conversation</div>
-          </div>
-          <div class="cmd-row" onclick="prefill('remember that I like football')">
-            <div class="cmd-text">remember that I like ___</div>
-            <div class="cmd-desc">teach dadOS things about you — he keeps them forever</div>
-          </div>
-          <div class="cmd-row" onclick="prefill('what can you do?')">
-            <div class="cmd-text">what can you do?</div>
-            <div class="cmd-desc">ask dadOS what he knows right now</div>
-          </div>
-          <div class="cmd-row" onclick="prefill('open config.py and tell me what to change first')">
-            <div class="cmd-text">open config.py</div>
-            <div class="cmd-desc">first upgrade — make dadOS yours in 5 minutes</div>
-          </div>
+        <div class="cmd-row" onclick="prefill('remember that I like football')">
+          <div class="cmd-text">remember that I like ___</div>
+          <div class="cmd-desc">teach dadOS things about you — he keeps them forever</div>
         </div>
-      </div>
-
-      <div class="onboard-section">
-        <div class="onboard-section-label">Your Roadmap — 10 paths, From Basic To Intricate</div>
-        <iframe 
-          src="https://roadmap.sh/r/embed?id=69d8260135198b31d6e8cab0" 
-          width="100%" 
-          height="500px" 
-          frameBorder="0"
-          style="border-radius: 8px; box-shadow: rgba(19,19,22,0.7) 0px 1px 5px -4px, rgba(34,42,53,0.08) 0px 0px 0px 1px, rgba(34,42,53,0.05) 0px 4px 8px 0px;"
-        ></iframe>
+        <div class="cmd-row" onclick="prefill('what can you do?')">
+          <div class="cmd-text">what can you do?</div>
+          <div class="cmd-desc">ask dadOS what he knows right now</div>
+        </div>
+        <div class="cmd-row" onclick="prefill('open config.py and tell me what to change first')">
+          <div class="cmd-text">open config.py</div>
+          <div class="cmd-desc">first upgrade — make dadOS yours in 5 minutes</div>
+        </div>
       </div>
       <div class="onboard-cta">
         <button class="cta-main" onclick="dismissOnboarding()">I'm ready — let's build</button>
         <span class="cta-hint">or just start typing below</span>
       </div>
     `;
-    return el;
+
+    chatEl.insertBefore(bottom, msgsEl);
+    chatEl.insertBefore(roadmap, bottom);
+    chatEl.insertBefore(hero, roadmap);
+  }
+
+  function removeOnboarding() {
+    ['onboard-hero', 'roadmap-block', 'onboard-bottom'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.style.transition = 'opacity 0.2s';
+        el.style.opacity = '0';
+        setTimeout(() => el.remove(), 200);
+      }
+    });
   }
 
   function prefill(text) {
@@ -533,12 +504,7 @@
   }
 
   function dismissOnboarding() {
-    const el = document.getElementById('onboarding');
-    if (el) {
-      el.style.transition = 'opacity 0.2s';
-      el.style.opacity = '0';
-      setTimeout(() => el.remove(), 200);
-    }
+    removeOnboarding();
     localStorage.setItem(STORAGE_KEY, '1');
     inputEl.focus();
   }
@@ -551,7 +517,7 @@
       document.getElementById('status-user').textContent = data.user_name !== 'unknown' ? data.user_name : 'online';
       updateMemoryBar(data);
       if (!localStorage.getItem(STORAGE_KEY)) {
-        chatEl.appendChild(buildOnboarding(data.user_name));
+        buildOnboarding(data.user_name);
       }
     } catch(e) {
       document.getElementById('mem-display').textContent = 'server offline';
@@ -577,9 +543,9 @@
   }
 
   function addMessage(role, text) {
-    const wrap   = document.createElement('div');
+    const wrap = document.createElement('div');
     wrap.className = `msg ${role}`;
-    const label  = document.createElement('div');
+    const label = document.createElement('div');
     label.className = 'msg-label';
     label.textContent = role === 'user' ? 'You' : 'dadOS';
     const bubble = document.createElement('div');
@@ -587,7 +553,7 @@
     bubble.textContent = text;
     wrap.appendChild(label);
     wrap.appendChild(bubble);
-    chatEl.appendChild(wrap);
+    msgsEl.appendChild(wrap);
     chatEl.scrollTop = chatEl.scrollHeight;
   }
 
@@ -600,7 +566,7 @@
     dots.className = 'typing';
     dots.innerHTML = '<span></span><span></span><span></span>';
     wrap.appendChild(label); wrap.appendChild(dots);
-    chatEl.appendChild(wrap);
+    msgsEl.appendChild(wrap);
     chatEl.scrollTop = chatEl.scrollHeight;
   }
 
@@ -645,11 +611,12 @@
   async function resetSession() {
     if (!confirm('Clear this conversation?')) return;
     await fetch('/reset', { method: 'POST' });
-    chatEl.querySelectorAll('.msg').forEach(m => m.remove());
+    msgsEl.innerHTML = '';
+    removeOnboarding();
     localStorage.removeItem(STORAGE_KEY);
     const res  = await fetch('/status');
     const data = await res.json();
-    chatEl.appendChild(buildOnboarding(data.user_name));
+    buildOnboarding(data.user_name);
   }
 
   async function showMemory() {
