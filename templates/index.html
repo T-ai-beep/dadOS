@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+  <title>dadOS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cal+Sans&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --charcoal:    #242424;
+      --midnight:    #111111;
+      --white:       #ffffff;
+      --gray-mid:    #898989;
+      --gray-light:  #f5f5f5;
+      --gray-border: rgba(34,42,53,0.08);
+
+      --shadow-card:
+        rgba(19,19,22,0.7) 0px 1px 5px -4px,
+        rgba(34,42,53,0.08) 0px 0px 0px 1px,
+        rgba(34,42,53,0.05) 0px 4px 8px 0px;
+      --shadow-btn:
+        rgba(19,19,22,0.12) 0px 1px 5px -4px,
+        rgba(34,42,53,0.08) 0px 0px 0px 1px,
+        rgba(255,255,255,0.15) 0px 2px 0px inset;
+      --shadow-inset: rgba(0,0,0,0.06) 0px 1px 2px 0px inset;
+
+      --radius-sm:   6px;
+      --radius-md:   8px;
+      --radius-lg:   12px;
+      --radius-pill: 9999px;
+
+      --font-display: 'Cal Sans', sans-serif;
+      --font-body:    'Inter', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      background: var(--white);
+      color: var(--charcoal);
+      font-family: var(--font-body);
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .shell {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 28px;
+      border-bottom: 1px solid var(--gray-border);
+      background: var(--white);
+      flex-shrink: 0;
+    }
+
+    .header-left { display: flex; align-items: center; gap: 12px; }
+
+    .logo-mark {
+      width: 32px; height: 32px;
+      background: var(--charcoal);
+      border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--white);
+      font-family: var(--font-display);
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .logo-name {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--charcoal);
+      line-height: 1.1;
+    }
+
+    .version-pill {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--gray-mid);
+      background: var(--gray-light);
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+    }
+
+    .header-right { display: flex; align-items: center; gap: 8px; }
+
+    .status-wrap {
+      display: flex; align-items: center; gap: 6px;
+      padding: 5px 10px;
+    }
+
+    .status-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #22c55e;
+    }
+
+    .status-label {
+      font-size: 12px; font-weight: 500; color: var(--gray-mid);
+    }
+
+    .btn {
+      background: var(--white);
+      box-shadow: var(--shadow-btn);
+      color: var(--charcoal);
+      font-family: var(--font-body);
+      font-size: 12px; font-weight: 500;
+      padding: 6px 14px;
+      border-radius: var(--radius-md);
+      border: none; cursor: pointer;
+      transition: opacity 0.15s;
+      white-space: nowrap;
+    }
+    .btn:hover { opacity: 0.7; }
+
+    .btn-dark {
+      background: var(--charcoal);
+      color: var(--white);
+      box-shadow: none;
+    }
+
+    /* ── MEMORY BAR ── */
+    .memory-bar {
+      padding: 7px 28px;
+      background: var(--gray-light);
+      border-bottom: 1px solid var(--gray-border);
+      font-size: 12px; font-weight: 500;
+      color: var(--gray-mid);
+      display: flex; align-items: center; gap: 8px;
+      flex-shrink: 0; min-height: 32px;
+    }
+
+    .mem-label {
+      color: var(--charcoal); font-weight: 600;
+      font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+    }
+
+    .mem-item {
+      background: var(--white);
+      box-shadow: var(--shadow-card);
+      padding: 2px 10px;
+      border-radius: var(--radius-pill);
+      color: var(--charcoal);
+      font-size: 11px; font-weight: 500;
+    }
+
+    /* ── CHAT ── */
+    #chat {
+      flex: 1; overflow-y: auto;
+      padding: 28px;
+      display: flex; flex-direction: column; gap: 20px;
+      scroll-behavior: smooth;
+    }
+    #chat::-webkit-scrollbar { width: 3px; }
+    #chat::-webkit-scrollbar-thumb { background: var(--gray-border); border-radius: 2px; }
+
+    /* ── ONBOARDING ── */
+    .onboarding {
+      align-self: stretch;
+      display: flex; flex-direction: column; gap: 0;
+      animation: fade-up 0.35s ease-out;
+    }
+
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .onboard-hero {
+      padding: 36px 0 28px;
+      border-bottom: 1px solid var(--gray-border);
+      margin-bottom: 28px;
+    }
+
+    .onboard-title {
+      font-family: var(--font-display);
+      font-size: 52px; font-weight: 600;
+      color: var(--charcoal);
+      line-height: 1.1; letter-spacing: 0;
+      margin-bottom: 10px;
+    }
+
+    .onboard-greeting {
+      font-size: 15px; font-weight: 300;
+      color: var(--gray-mid); line-height: 1.5;
+      letter-spacing: -0.2px;
+    }
+    .onboard-greeting strong { color: var(--charcoal); font-weight: 600; }
+
+    .onboard-section { margin-bottom: 24px; }
+
+    .onboard-section-label {
+      font-size: 11px; font-weight: 600;
+      color: var(--gray-mid);
+      text-transform: uppercase; letter-spacing: 0.08em;
+      margin-bottom: 10px;
+    }
+
+    .onboard-what {
+      box-shadow: var(--shadow-card);
+      border-radius: var(--radius-lg);
+      padding: 18px 22px;
+      font-size: 14px; font-weight: 300;
+      color: var(--charcoal); line-height: 1.75;
+      letter-spacing: -0.2px;
+    }
+    .onboard-what p { margin-bottom: 10px; }
+    .onboard-what p:last-child { margin-bottom: 0; }
+
+    .onboard-commands {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+    }
+
+    .cmd-row {
+      box-shadow: var(--shadow-card);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      cursor: pointer;
+      transition: opacity 0.15s;
+      background: var(--white);
+    }
+    .cmd-row:hover { opacity: 0.65; }
+
+    .cmd-text {
+      font-family: var(--font-display);
+      font-size: 13px; font-weight: 600;
+      color: var(--charcoal); margin-bottom: 4px; line-height: 1.2;
+    }
+    .cmd-desc {
+      font-size: 12px; font-weight: 300;
+      color: var(--gray-mid); line-height: 1.4; letter-spacing: -0.2px;
+    }
+
+    .onboard-paths {
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;
+    }
+
+    .path-card {
+      box-shadow: var(--shadow-card);
+      border-radius: var(--radius-md);
+      padding: 14px 12px;
+      background: var(--white);
+      transition: opacity 0.15s;
+    }
+    .path-card:hover { opacity: 0.65; }
+
+    .path-icon { font-size: 18px; margin-bottom: 6px; }
+    .path-name {
+      font-family: var(--font-display);
+      font-size: 12px; font-weight: 600;
+      color: var(--charcoal); margin-bottom: 3px; line-height: 1.2;
+    }
+    .path-desc {
+      font-size: 11px; font-weight: 300;
+      color: var(--gray-mid); line-height: 1.4; letter-spacing: -0.2px;
+    }
+
+    .onboard-cta {
+      padding: 8px 0 4px;
+      display: flex; align-items: center; gap: 16px;
+    }
+
+    .cta-main {
+      background: var(--charcoal); color: var(--white);
+      font-family: var(--font-body);
+      font-size: 13px; font-weight: 600;
+      padding: 10px 24px;
+      border-radius: var(--radius-md);
+      border: none; cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .cta-main:hover { opacity: 0.7; }
+
+    .cta-hint {
+      font-size: 12px; font-weight: 300;
+      color: var(--gray-mid); letter-spacing: -0.2px;
+    }
+
+    /* ── MESSAGES ── */
+    .msg {
+      display: flex; flex-direction: column; gap: 5px;
+      animation: fade-up 0.18s ease-out;
+    }
+    .msg.user { align-self: flex-end; align-items: flex-end; max-width: 68%; }
+    .msg.dad  { align-self: flex-start; align-items: flex-start; max-width: 80%; }
+
+    .msg-label {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 0.08em; color: var(--gray-mid);
+      text-transform: uppercase; padding: 0 4px;
+    }
+
+    .bubble {
+      padding: 12px 16px;
+      border-radius: var(--radius-lg);
+      font-size: 14px; line-height: 1.7;
+      white-space: pre-wrap; word-break: break-word;
+      font-weight: 400;
+    }
+
+    .msg.user .bubble {
+      background: var(--gray-light);
+      color: var(--charcoal);
+      border-bottom-right-radius: var(--radius-sm);
+      box-shadow: var(--shadow-inset);
+    }
+
+    .msg.dad .bubble {
+      background: var(--charcoal);
+      color: var(--white);
+      border-bottom-left-radius: var(--radius-sm);
+      box-shadow: rgba(19,19,22,0.18) 0px 4px 16px -4px;
+    }
+
+    /* ── TYPING ── */
+    .typing-wrap { align-self: flex-start; animation: fade-up 0.18s ease-out; }
+
+    .typing {
+      display: flex; align-items: center; gap: 5px;
+      padding: 14px 18px;
+      background: var(--charcoal);
+      border-radius: var(--radius-lg);
+      border-bottom-left-radius: var(--radius-sm);
+    }
+
+    .typing span {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: rgba(255,255,255,0.45);
+      animation: bounce 1.1s ease-in-out infinite;
+    }
+    .typing span:nth-child(2) { animation-delay: 0.18s; }
+    .typing span:nth-child(3) { animation-delay: 0.36s; }
+
+    @keyframes bounce {
+      0%,60%,100% { transform: translateY(0); opacity: 0.35; }
+      30%          { transform: translateY(-5px); opacity: 1; }
+    }
+
+    /* ── INPUT ── */
+    .footer {
+      padding: 16px 28px 20px;
+      border-top: 1px solid var(--gray-border);
+      background: var(--white);
+      flex-shrink: 0;
+    }
+
+    .input-row { display: flex; gap: 8px; align-items: flex-end; }
+
+    #input {
+      flex: 1;
+      background: var(--white);
+      box-shadow: var(--shadow-card);
+      border: none; border-radius: var(--radius-lg);
+      color: var(--charcoal);
+      font-family: var(--font-body);
+      font-size: 14px; font-weight: 400;
+      padding: 12px 16px;
+      resize: none; outline: none;
+      min-height: 46px; max-height: 130px;
+      line-height: 1.5;
+      transition: box-shadow 0.15s;
+    }
+
+    #input:focus {
+      box-shadow:
+        rgba(19,19,22,0.7) 0px 1px 5px -4px,
+        rgba(34,42,53,0.16) 0px 0px 0px 1px,
+        rgba(34,42,53,0.05) 0px 4px 8px 0px;
+    }
+
+    #input::placeholder { color: var(--gray-mid); font-weight: 300; }
+
+    #send-btn {
+      height: 46px; padding: 0 20px;
+      background: var(--charcoal);
+      border: none; border-radius: var(--radius-lg);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 12px; font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.15s;
+      white-space: nowrap; flex-shrink: 0;
+    }
+    #send-btn:hover    { opacity: 0.7; }
+    #send-btn:active   { transform: scale(0.97); }
+    #send-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+    .input-hint {
+      font-size: 11px; font-weight: 300;
+      color: var(--gray-mid); margin-top: 8px; letter-spacing: -0.2px;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      .header { padding: 12px 16px; }
+      .onboard-title { font-size: 36px; }
+      #chat { padding: 16px; gap: 14px; }
+      .footer { padding: 12px 16px 16px; }
+      .memory-bar { padding: 6px 16px; }
+      .msg.user { max-width: 88%; }
+      .msg.dad  { max-width: 96%; }
+      .bubble { font-size: 13px; }
+      .onboard-commands { grid-template-columns: 1fr; }
+      .onboard-paths { grid-template-columns: repeat(2, 1fr); }
+      .status-wrap { display: none; }
+      .onboard-hero { padding: 20px 0 16px; }
+    }
+  </style>
+</head>
+<body>
+<div class="shell">
+
+  <header class="header">
+    <div class="header-left">
+      <div class="logo-mark">d</div>
+      <span class="logo-name">dadOS</span>
+      <span class="version-pill" id="v-badge">v1.0</span>
+    </div>
+    <div class="header-right">
+      <div class="status-wrap">
+        <div class="status-dot"></div>
+        <span class="status-label" id="status-user">online</span>
+      </div>
+      <button class="btn" onclick="showMemory()">Memory</button>
+      <button class="btn btn-dark" onclick="resetSession()">Clear</button>
+    </div>
+  </header>
+
+  <div class="memory-bar" id="memory-bar">
+    <span class="mem-label">MEM</span>
+    <span id="mem-display">loading...</span>
+  </div>
+
+  <div id="chat"></div>
+
+  <div class="footer">
+    <div class="input-row">
+      <textarea
+        id="input"
+        placeholder="Ask dadOS anything..."
+        rows="1"
+        onkeydown="handleKey(event)"
+        oninput="autoResize(this)"
+      ></textarea>
+      <button id="send-btn" onclick="sendMessage()">Send ↵</button>
+    </div>
+    <div class="input-hint">Enter to send · Shift+Enter for new line · "remember that..." to save a fact</div>
+  </div>
+
+</div>
+
+<script>
+  const chatEl  = document.getElementById('chat');
+  const inputEl = document.getElementById('input');
+  const sendBtn = document.getElementById('send-btn');
+  const STORAGE_KEY = 'dadOS_onboarded';
+
+  function buildOnboarding(userName) {
+    const name = userName && userName !== 'unknown' ? userName : 'Manav';
+    const el = document.createElement('div');
+    el.className = 'onboarding';
+    el.id = 'onboarding';
+    el.innerHTML = `
+      <div class="onboard-hero">
+        <div class="onboard-title">dadOS</div>
+        <div class="onboard-greeting">Welcome, <strong>${name}</strong>. Your personal AI — built by Tanay, owned by you.</div>
+      </div>
+
+      <div class="onboard-section">
+        <div class="onboard-section-label">What is this?</div>
+        <div class="onboard-what">
+          <p>Right now it's basic — a working AI with memory and a few tricks. Every upgrade you make teaches you something real about how AI works. Not theory. Not exercises. You're building an actual thing.</p>
+          <p>The code is all yours. Change anything. Break things. That's the point.</p>
+        </div>
+      </div>
+
+      <div class="onboard-section">
+        <div class="onboard-section-label">Start here</div>
+        <div class="onboard-commands">
+          <div class="cmd-row" onclick="prefill('my name is Manav')">
+            <div class="cmd-text">my name is Manav</div>
+            <div class="cmd-desc">dadOS remembers you across every conversation</div>
+          </div>
+          <div class="cmd-row" onclick="prefill('remember that I like football')">
+            <div class="cmd-text">remember that I like ___</div>
+            <div class="cmd-desc">teach dadOS things about you — he keeps them forever</div>
+          </div>
+          <div class="cmd-row" onclick="prefill('what can you do?')">
+            <div class="cmd-text">what can you do?</div>
+            <div class="cmd-desc">ask dadOS what he knows right now</div>
+          </div>
+          <div class="cmd-row" onclick="prefill('open config.py and tell me what to change first')">
+            <div class="cmd-text">open config.py</div>
+            <div class="cmd-desc">first upgrade — make dadOS yours in 5 minutes</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="onboard-section">
+        <div class="onboard-section-label">Where this goes — 10 paths, your order</div>
+        <div class="onboard-paths">
+          <div class="path-card"><div class="path-icon">🗃️</div><div class="path-name">Memory & Knowledge</div><div class="path-desc">Give dadOS real deep memory</div></div>
+          <div class="path-card"><div class="path-icon">🔗</div><div class="path-name">Integrations & APIs</div><div class="path-desc">Connect dadOS to everything</div></div>
+          <div class="path-card"><div class="path-icon">🧠</div><div class="path-name">Reasoning & Logic</div><div class="path-desc">Make dadOS think harder</div></div>
+          <div class="path-card"><div class="path-icon">🤖</div><div class="path-name">Agentic AI</div><div class="path-desc">Make dadOS act, not just talk</div></div>
+          <div class="path-card"><div class="path-icon">🧬</div><div class="path-name">Model Internals</div><div class="path-desc">Understand how AI works</div></div>
+          <div class="path-card"><div class="path-icon">📊</div><div class="path-name">Data & ML</div><div class="path-desc">Teach dadOS from data</div></div>
+          <div class="path-card"><div class="path-icon">🎨</div><div class="path-name">Generative AI</div><div class="path-desc">Make dadOS create things</div></div>
+          <div class="path-card"><div class="path-icon">👁️</div><div class="path-name">Multimodal AI</div><div class="path-desc">Give dadOS eyes and ears</div></div>
+          <div class="path-card"><div class="path-icon">🔬</div><div class="path-name">Evaluation & Testing</div><div class="path-desc">Measure if dadOS is good</div></div>
+          <div class="path-card"><div class="path-icon">🌐</div><div class="path-name">Multi-Agent Systems</div><div class="path-desc">Multiple AIs working together</div></div>
+        </div>
+      </div>
+
+      <div class="onboard-cta">
+        <button class="cta-main" onclick="dismissOnboarding()">I'm ready — let's build</button>
+        <span class="cta-hint">or just start typing below</span>
+      </div>
+    `;
+    return el;
+  }
+
+  function prefill(text) {
+    inputEl.value = text;
+    inputEl.focus();
+    autoResize(inputEl);
+    dismissOnboarding();
+  }
+
+  function dismissOnboarding() {
+    const el = document.getElementById('onboarding');
+    if (el) {
+      el.style.transition = 'opacity 0.2s';
+      el.style.opacity = '0';
+      setTimeout(() => el.remove(), 200);
+    }
+    localStorage.setItem(STORAGE_KEY, '1');
+    inputEl.focus();
+  }
+
+  async function init() {
+    try {
+      const res  = await fetch('/status');
+      const data = await res.json();
+      document.getElementById('v-badge').textContent     = 'v' + data.version;
+      document.getElementById('status-user').textContent = data.user_name !== 'unknown' ? data.user_name : 'online';
+      updateMemoryBar(data);
+      if (!localStorage.getItem(STORAGE_KEY)) {
+        chatEl.appendChild(buildOnboarding(data.user_name));
+      }
+    } catch(e) {
+      document.getElementById('mem-display').textContent = 'server offline';
+    }
+  }
+
+  function updateMemoryBar(data) {
+    const el = document.getElementById('mem-display');
+    if (data.user_name && data.user_name !== 'unknown') {
+      el.innerHTML = `<span class="mem-item">name: ${data.user_name}</span><span class="mem-item">${data.memory_facts} fact${data.memory_facts !== 1 ? 's' : ''}</span>`;
+    } else {
+      el.textContent = 'no memory yet · say "my name is ..." to start';
+    }
+  }
+
+  function autoResize(el) {
+    el.style.height = 'auto';
+    el.style.height = Math.min(el.scrollHeight, 130) + 'px';
+  }
+
+  function handleKey(e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+  }
+
+  function addMessage(role, text) {
+    const wrap   = document.createElement('div');
+    wrap.className = `msg ${role}`;
+    const label  = document.createElement('div');
+    label.className = 'msg-label';
+    label.textContent = role === 'user' ? 'You' : 'dadOS';
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    bubble.textContent = text;
+    wrap.appendChild(label);
+    wrap.appendChild(bubble);
+    chatEl.appendChild(wrap);
+    chatEl.scrollTop = chatEl.scrollHeight;
+  }
+
+  function showTyping() {
+    const wrap = document.createElement('div');
+    wrap.className = 'typing-wrap'; wrap.id = 'typing';
+    const label = document.createElement('div');
+    label.className = 'msg-label'; label.textContent = 'dadOS';
+    const dots = document.createElement('div');
+    dots.className = 'typing';
+    dots.innerHTML = '<span></span><span></span><span></span>';
+    wrap.appendChild(label); wrap.appendChild(dots);
+    chatEl.appendChild(wrap);
+    chatEl.scrollTop = chatEl.scrollHeight;
+  }
+
+  function removeTyping() {
+    const el = document.getElementById('typing');
+    if (el) el.remove();
+  }
+
+  async function sendMessage() {
+    const text = inputEl.value.trim();
+    if (!text) return;
+    dismissOnboarding();
+    inputEl.value = ''; inputEl.style.height = 'auto';
+    sendBtn.disabled = true;
+    addMessage('user', text);
+    showTyping();
+    try {
+      const res  = await fetch('/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: text })
+      });
+      const data = await res.json();
+      removeTyping();
+      if (data.error) {
+        addMessage('dad', '⚠ ' + data.error);
+      } else {
+        addMessage('dad', data.response);
+        const status = await fetch('/status');
+        const sdata  = await status.json();
+        updateMemoryBar(sdata);
+        document.getElementById('status-user').textContent = sdata.user_name !== 'unknown' ? sdata.user_name : 'online';
+      }
+    } catch(err) {
+      removeTyping();
+      addMessage('dad', '⚠ Cannot reach server. Is main.py running?');
+    }
+    sendBtn.disabled = false;
+    inputEl.focus();
+  }
+
+  async function resetSession() {
+    if (!confirm('Clear this conversation?')) return;
+    await fetch('/reset', { method: 'POST' });
+    chatEl.querySelectorAll('.msg').forEach(m => m.remove());
+    localStorage.removeItem(STORAGE_KEY);
+    const res  = await fetch('/status');
+    const data = await res.json();
+    chatEl.appendChild(buildOnboarding(data.user_name));
+  }
+
+  async function showMemory() {
+    const res  = await fetch('/memory');
+    const data = await res.json();
+    let text = '── dadOS Memory ──\n';
+    text += `Name: ${data.user_name || 'not set'}\n`;
+    text += `Facts stored: ${data.facts?.length || 0}\n`;
+    if (data.facts?.length) { text += '\nFacts:\n'; data.facts.forEach(f => { text += `  · ${f}\n`; }); }
+    text += '\nTo clear all memory, say "forget everything"';
+    alert(text);
+  }
+
+  init();
+  inputEl.focus();
+</script>
+</body>
+</html>
