@@ -1,94 +1,39 @@
 # dadOS v1.0
-> Your personal AI. Built by Tanay. Owned by you.
 
----
+## Setup
 
-## Hey Manav.
+**1. Install Ollama**
+https://ollama.com
 
-This is dadOS.
-
-The code is all yours. Change anything. Break things. That's the point.
-
----
-
-## Before you start
-
-You need Ollama installed on your machine.
-
-### 1. Install Ollama
-Go to **https://ollama.com** and download it for your computer.
-
-### 2. Pull the model
+**2. Pull the model**
 ```bash
 ollama pull llama3.2
 ```
 
-### 3. Start Ollama
-```bash
-ollama serve
-```
-
-That's it. No API keys. No accounts. Runs entirely on your computer.
-
----
-
-## How to run dadOS
-
-### Step 1 — Install dependencies
+**3. Install dependencies**
 ```bash
 pip install -r requirements.txt
 ```
 
-### Step 2 — Run dadOS
+**4. Run**
 ```bash
+ollama serve
 python main.py
 ```
 
-### Step 3 — Open your browser
-Go to: **http://localhost:8000**
-
----
-
-## Your first 10 minutes
-
-When dadOS opens, you'll see an onboarding screen. Start with these:
-
-**Introduce yourself:**
+**5. Open browser**
 ```
-my name is Manav
-```
-
-**Teach dadOS something about you:**
-```
-remember that I like football
-remember that I wake up at 6am
-```
-
-**Make him forget something:**
-```
-forget that I like football
-```
-
-**Ask about the weather (optional — needs API key):**
-```
-what's the weather like?
+http://localhost:8000
 ```
 
 ---
 
-## The first file you should open
+## Optional: Live weather
 
-Open `config.py`. This is where dadOS's personality lives.
-
-Change your name, add topics you care about, adjust his mood. This is v0.2 — you've already upgraded him.
-
-```python
-USER_NAME   = "Manav"        # ← already set
-EXPERT_TOPICS = [
-    "artificial intelligence",
-    "technology",
-    "football",              # ← add anything you care about
-]
+Get a free key at https://openweathermap.org/api, then:
+```bash
+cp .env.example .env
+# paste your key into .env
 ```
 
 ---
@@ -97,71 +42,62 @@ EXPERT_TOPICS = [
 
 ```
 dadOS-v1.0/
-├── main.py              # The server — talks to Ollama
+├── main.py              # Server — handles all requests
 ├── config.py            # Personality & settings — start here
-├── prompt_builder.py    # Builds dadOS's brain fresh every message
-├── memory.py            # Long-term memory across sessions
+├── prompt_builder.py    # Builds the AI's instructions every message
+├── memory.py            # Saves facts across sessions
 ├── tools/
-│   └── weather.py       # Live weather (optional)
+│   └── weather.py       # Live weather tool
+├── templates/
+│   └── index.html       # The chat UI
 ├── requirements.txt
-├── .env.example         # Rename to .env, add weather key if you want
-└── templates/
-    └── index.html       # The chat UI — all yours to modify
+└── .env.example
 ```
+
+**The file to open first:** `config.py` — this is where dadOS's name, topics, and behavior live.
 
 ---
 
-## Optional: Live weather
+## How memory works
 
-Get a free API key at **https://openweathermap.org/api**
-
-Then:
-```bash
-cp .env.example .env
-# open .env and paste your key
+```
+my name is ___           → dadOS remembers your name
+remember that ___        → saves a fact permanently
+forget that ___          → removes a fact
 ```
 
 ---
 
 ## The Roadmap
 
-After the foundation, there are 10 paths. You pick the order.
-Each one is a full arc — real things you build into dadOS.
-
-The full interactive roadmap is at: **[your roadmap.sh link here]**
-
----
-
-### 🟢 Foundation (v0.1 – v1.0) — already built for you
+### 🟢 Foundation (already built)
 
 | Version | What you do | Concept |
 |---------|-------------|---------|
 | v0.1 | Change dadOS's name & personality | System prompts |
 | v0.2 | Make dadOS remember your name | Context & state |
-| v0.3 | Make dadOS an expert on something you love | Prompt engineering |
-| v0.4 | Connect dadOS to a live API (weather, sports, news) | Tool use |
+| v0.3 | Make dadOS an expert on something | Prompt engineering |
+| v0.4 | Connect dadOS to a live API | Tool use |
 | v0.5 | Make dadOS ask clarifying questions | Prompt chaining |
 | v0.6 | Make dadOS respond differently by time of day | Conditional logic |
 | v0.7 | Add reset, clear chat, new session | UI basics |
-| v0.8 | Style the chat UI to feel like your app | Frontend |
+| v0.8 | Style the chat UI | Frontend |
 | v0.9 | Make it work on your phone | Responsive design |
-| v1.0 | Show dadOS to someone | Milestone: first user |
+| v1.0 | Show dadOS to someone | Milestone |
 
 ---
 
 ### 🤖 Path 1 — The Agent
 *Make dadOS act, not just talk.*
 
-dadOS stops being a chatbot and starts being something that does things for you.
-
 | Version | What you build |
 |---------|----------------|
-| v1.1 | dadOS can search the web for you |
+| v1.1 | dadOS can search the web |
 | v1.2 | dadOS gives himself a to-do list |
 | v1.3 | dadOS completes multi-step tasks |
-| v1.4 | dadOS runs on a schedule without you asking |
-| v1.5 | dadOS browses a website on his own |
-| v1.6 | dadOS fills out a form for you |
+| v1.4 | dadOS runs on a schedule |
+| v1.5 | dadOS browses a website |
+| v1.6 | dadOS fills out a form |
 | v1.7 | dadOS checks his own work |
 | v1.8 | dadOS retries when he fails |
 | v1.9 | dadOS logs everything he does |
@@ -172,17 +108,15 @@ dadOS stops being a chatbot and starts being something that does things for you.
 ### 🧠 Path 2 — The Reasoner
 *Make dadOS think harder.*
 
-dadOS stops giving shallow answers and starts reasoning through complex problems.
-
 | Version | What you build |
 |---------|----------------|
 | v2.1 | dadOS thinks step-by-step before answering |
 | v2.2 | dadOS argues both sides of any question |
 | v2.3 | dadOS challenges his own first answer |
 | v2.4 | dadOS breaks big problems into smaller ones |
-| v2.5 | dadOS asks Socratic questions to help you think |
+| v2.5 | dadOS asks Socratic questions |
 | v2.6 | dadOS rates his own confidence |
-| v2.7 | dadOS changes his mind when you give him evidence |
+| v2.7 | dadOS changes his mind when given evidence |
 | v2.8 | dadOS explains his reasoning step by step |
 | v2.9 | dadOS identifies when he doesn't know something |
 | v3.0 | dadOS solves a problem you couldn't solve alone |
@@ -192,8 +126,6 @@ dadOS stops giving shallow answers and starts reasoning through complex problems
 ### 🧬 Path 3 — The Scientist
 *Understand how AI actually works.*
 
-You stop using AI as a black box and start understanding what's happening inside.
-
 | Version | What you build |
 |---------|----------------|
 | v3.1 | Count how many tokens dadOS uses per message |
@@ -201,24 +133,22 @@ You stop using AI as a black box and start understanding what's happening inside
 | v3.3 | Hit the context window limit on purpose |
 | v3.4 | Compare two different models side by side |
 | v3.5 | Write a system prompt evaluator |
-| v3.6 | Understand what embeddings are — visualize them |
+| v3.6 | Understand embeddings — visualize them |
 | v3.7 | Build semantic search for dadOS's memory |
 | v3.8 | Build a RAG pipeline from scratch |
 | v3.9 | Fine-tune a small model on your own data |
-| v4.0 | You can explain how dadOS thinks to someone else |
+| v4.0 | Explain how dadOS thinks to someone else |
 
 ---
 
 ### 🔗 Path 4 — The Connector
 *Connect dadOS to the real world.*
 
-dadOS gets access to live data, your apps, and services you actually use.
-
 | Version | What you build |
 |---------|----------------|
-| v4.1 | dadOS fetches live news for you |
+| v4.1 | dadOS fetches live news |
 | v4.2 | dadOS reads your calendar |
-| v4.3 | dadOS sends you a daily briefing email |
+| v4.3 | dadOS sends a daily briefing email |
 | v4.4 | dadOS texts you via WhatsApp or SMS |
 | v4.5 | dadOS pulls live sports scores |
 | v4.6 | dadOS reads a spreadsheet and answers questions |
@@ -232,17 +162,15 @@ dadOS gets access to live data, your apps, and services you actually use.
 ### 🗃️ Path 5 — The Memory Architect
 *Give dadOS real, deep memory.*
 
-dadOS goes from remembering your name to knowing you better than most apps do.
-
 | Version | What you build |
 |---------|----------------|
 | v5.1 | dadOS remembers across sessions (beyond JSON) |
 | v5.2 | dadOS stores facts in a real database |
 | v5.3 | dadOS can search his own memory |
-| v5.4 | Feed dadOS a document — he answers questions about it |
+| v5.4 | Feed dadOS a document — he answers questions |
 | v5.5 | dadOS summarizes what he knows about any topic |
 | v5.6 | dadOS forgets things you tell him to |
-| v5.7 | dadOS organizes his memory into categories |
+| v5.7 | dadOS organizes memory into categories |
 | v5.8 | dadOS retrieves the right memory at the right time |
 | v5.9 | dadOS builds a knowledge graph about you |
 | v6.0 | dadOS knows you better than Google does |
@@ -251,8 +179,6 @@ dadOS goes from remembering your name to knowing you better than most apps do.
 
 ### 👁️ Path 6 — The Multimodal
 *Give dadOS eyes, ears, and a voice.*
-
-dadOS learns to understand and generate more than just text.
 
 | Version | What you build |
 |---------|----------------|
@@ -272,12 +198,10 @@ dadOS learns to understand and generate more than just text.
 ### 🎨 Path 7 — The Creative
 *Make dadOS generate things.*
 
-dadOS learns to create — images, stories, music, ideas.
-
 | Version | What you build |
 |---------|----------------|
 | v7.1 | dadOS writes a story in your style |
-| v7.2 | dadOS generates images from your descriptions |
+| v7.2 | dadOS generates images from descriptions |
 | v7.3 | dadOS writes music lyrics on demand |
 | v7.4 | dadOS generates a logo or icon |
 | v7.5 | dadOS creates a slide deck from a prompt |
@@ -291,8 +215,6 @@ dadOS learns to create — images, stories, music, ideas.
 
 ### 📊 Path 8 — The Data Scientist
 *Teach dadOS from data.*
-
-dadOS learns to analyze, predict, and learn from real datasets.
 
 | Version | What you build |
 |---------|----------------|
@@ -312,8 +234,6 @@ dadOS learns to analyze, predict, and learn from real datasets.
 ### 🔬 Path 9 — The Evaluator
 *Measure if dadOS is actually good.*
 
-You learn to test AI properly — because feeling smart and being smart are different things.
-
 | Version | What you build |
 |---------|----------------|
 | v9.1 | Write your first test case for dadOS |
@@ -332,12 +252,10 @@ You learn to test AI properly — because feeling smart and being smart are diff
 ### 🌐 Path 10 — The Orchestrator
 *Multiple AIs working together.*
 
-dadOS learns to coordinate other AIs, delegate tasks, and run complex workflows.
-
 | Version | What you build |
 |---------|----------------|
 | v10.1 | dadOS talks to a second AI |
-| v10.2 | dadOS delegates a task to a specialist AI |
+| v10.2 | dadOS delegates to a specialist AI |
 | v10.3 | dadOS runs a pipeline of AI steps |
 | v10.4 | dadOS has a planner and a doer |
 | v10.5 | dadOS spawns sub-agents for parallel work |
@@ -346,18 +264,3 @@ dadOS learns to coordinate other AIs, delegate tasks, and run complex workflows.
 | v10.8 | dadOS coordinates 3 AIs at once |
 | v10.9 | dadOS manages a full AI workflow |
 | v11.0 | dadOS is a system, not just an AI |
-
----
-
-## Beyond v11
-
-No map. You decide what dadOS becomes.
-
-Maybe you share him. Maybe you rebuild him from scratch and teach someone else. Maybe he does something none of this predicted.
-
-That's yours.
-
----
-
-*dadOS was built for you by Tanay.*
-*The rest is up to you.*
